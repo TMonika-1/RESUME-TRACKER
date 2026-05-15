@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resume Analyzer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- Theme Toggle Button -->
+  <div class="theme-toggle-container">
+    <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle Dark Mode">🌙 Dark Mode</button>
+  </div>
+
+  <!-- Landing Page -->
+  <div id="landingPage" class="landing-page">
+    <nav class="navbar">
+      <div class="navbar-container">
+        <div class="logo">📄 Resume Tracker</div>
+        <button id="desktopLoginBtn" class="nav-login-btn">Get Started</button>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Resume Analyzer</h1>
+        <p>Manage and organize resumes efficiently with cloud-based storage</p>
+        <button id="getStartedBtn" class="cta-btn">Get Started</button>
+      </div>
+    </section>
+
+    <section class="features">
+      <h2>Features</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📤</div>
+          <h3>Easy Upload</h3>
+          <p>Quickly upload and store resumes with candidate information</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔍</div>
+          <h3>Smart Search</h3>
+          <p>Find candidates by skill set with advanced filtering</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Analytics</h3>
+          <p>View statistics and insights about resume uploads</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🌙</div>
+          <h3>Dark Mode</h3>
+          <p>Comfortable reading with dark mode support</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">☁️</div>
+          <h3>Cloud Storage</h3>
+          <p>Secure storage on Azure cloud infrastructure</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔐</div>
+          <h3>Secure Access</h3>
+          <p>Role-based access control for candidates and admins</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="about">
+      <h2>About Resume Tracker</h2>
+      <p>Resume Tracker is a modern, full-stack application designed to simplify resume management. Built with Node.js,
+        Express, and Azure cloud services, it provides a seamless experience for both job candidates and recruiters.</p>
+      <p><strong>Technologies Used:</strong> Node.js, Express.js, Azure Cosmos DB, Azure Blob Storage</p>
+    </section>
+
+    <section class="contact">
+      <h2>Connect With Me</h2>
+      <div class="contact-links">
+        <a href="https://www.linkedin.com/in/t-monika88/" target="_blank" class="contact-link">
+          <span class="contact-icon">🔗</span>
+          <span>LinkedIn</span>
+        </a>
+        <a href="https://www.facebook.com/TMonika.sh.3" target="_blank" class="contact-link">
+          <span class="contact-icon">👥</span>
+          <span>Facebook</span>
+        </a>
+        <a href="https://wa.me/8815697123" target="_blank" class="contact-link">
+          <span class="contact-icon">💬</span>
+          <span>WhatsApp</span>
+        </a>
+        <a href="https://github.com/TMonika-1/RESUME-TRACKER.git" target="_blank" class="contact-link">
+          <span class="contact-icon">💻</span>
+          <span>GitHub</span>
+        </a>
+      </div>
+      <p class="contact-phone">📞 <strong>+91 8815697123</strong></p>
+    </section>
+
+    <footer class="footer">
+      <p>&copy; 2026 Resume Tracker. All rights reserved. | Built with ❤️ by T Monika</p>
+    </footer>
+  </div>
+
+  <!-- Login Page -->
+  <div id="loginPage" class="login-container" style="display: none;">
+    <div class="login-card">
+      <button id="backToLandingBtn" class="back-btn">← Back</button>
+      <h1>Resume Tracker</h1>
+      <p>Select your role to continue</p>
+      <div class="login-buttons">
+        <button id="candidateBtn" class="login-btn candidate-btn">Upload Resume</button>
+        <button id="adminBtn" class="login-btn admin-btn">Admin Login</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Candidate Upload Page -->
+  <div id="candidatePage" class="page" style="display: none;">
+    <div class="container">
+      <div class="header">
+        <h1>Resume Tracker - Upload Resume</h1>
+        <button id="logoutCandidateBtn" class="logout-btn">Logout</button>
+      </div>
+
+      <!-- Upload Form -->
+      <form id="resumeForm">
+        <input type="text" name="name" placeholder="Full Name" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="text" name="skills" placeholder="Skills (Java, SQL, Azure)" required />
+        <input type="file" name="resume" required />
+        <button type="submit">Upload Resume</button>
+      </form>
+
+      <hr />
+
+      <!-- Uploaded Resumes -->
+      <h2>Uploaded Resumes</h2>
+      <div id="resumeListContainer">
+        <ul id="resumeList"></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Access Denied Popup Modal -->
+  <div id="accessDeniedModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h2>Download Restricted</h2>
+      <p>You don't have permission to download resumes directly.</p>
+      <p><strong>Please log in as Admin to download resumes.</strong></p>
+      <button id="goToAdminBtn" class="modal-btn">Go to Admin Login</button>
+    </div>
+  </div>
+
+  <!-- Candidate Detail Modal (Admin) -->
+  <div id="candidateDetailModal" class="modal" style="display: none;">
+    <div class="modal-content detail-modal">
+      <span class="close-modal" id="closeDetailModal">&times;</span>
+      <h2 id="detailModalName">Candidate Details</h2>
+
+      <div class="detail-section">
+        <p><strong>Name:</strong> <span id="detailName"></span></p>
+        <p><strong>Email:</strong> <span id="detailEmail"></span></p>
+        <p><strong>Skills:</strong> <span id="detailSkills"></span></p>
+        <p><strong>File Size:</strong> <span id="detailFileSize"></span></p>
+        <p><strong>Uploaded:</strong> <span id="detailUploadedAt"></span></p>
+      </div>
+
+      <div class="detail-actions">
+        <a id="detailDownloadBtn" href="#" class="action-btn download-btn" download>
+          📥 Download Resume
+        </a>
+        <button id="detailDeleteBtn" class="action-btn delete-btn">
+          🗑️ Delete Resume
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Page -->
+  <div id="adminPage" class="page" style="display: none;">
+    <div class="container">
+      <div class="header">
+        <h1>Resume Tracker - Admin Panel</h1>
+        <button id="logoutAdminBtn" class="logout-btn">Logout</button>
+      </div>
+
+      <!-- Analytics Dashboard -->
+      <div class="analytics-dashboard">
+        <h2>📊 Analytics Dashboard</h2>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-number" id="totalResumes">0</div>
+            <div class="stat-label">Total Resumes</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number" id="weeksUploads">0</div>
+            <div class="stat-label">This Week</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number" id="monthUploads">0</div>
+            <div class="stat-label">This Month</div>
+          </div>
+        </div>
+
+        <div class="skills-section">
+          <h3>🏆 Top 5 Most Common Skills</h3>
+          <div id="topSkillsList" class="skills-list"></div>
+        </div>
+      </div>
+
+      <hr />
+
+      <!-- Search Section -->
+      <div class="search-section">
+        <h2>Search Candidates by Skills</h2>
+        <div class="search-box">
+          <input type="text" id="skillsSearchInput" placeholder="Enter skills (e.g., Java, Python, SQL)" />
+          <button id="searchBtn" class="search-btn">Search</button>
+          <button id="clearSearchBtn" class="clear-btn">Clear Search</button>
+        </div>
+      </div>
+
+      <hr />
+
+      <!-- Search Results -->
+      <h2>Candidates</h2>
+      <ul id="adminResumeList"></ul>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
